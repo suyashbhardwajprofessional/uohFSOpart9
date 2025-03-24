@@ -1,0 +1,24 @@
+{
+  "name": "uohfsopart9",
+  "version": "1.0.0",
+  "description": "part 9 submission repo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "calculateBmi": "ts-node bmiCalculator.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suyashbhardwajprofessional/uohFSOpart9.git"
+  },
+  "author": "suyash bhardwaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suyashbhardwajprofessional/uohFSOpart9/issues"
+  },
+  "homepage": "https://github.com/suyashbhardwajprofessional/uohFSOpart9#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
