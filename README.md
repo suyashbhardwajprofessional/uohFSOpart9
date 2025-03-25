@@ -15,3 +15,4 @@ march 25, 2025
 02 slept, did exercise 9.3
 03 slept, did exercise 9.4
 04 did exercise 9.5
+05 did exercise 9.6

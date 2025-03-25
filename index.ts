@@ -5,8 +5,8 @@ import { isNotNumber } from './utils';
 
 const app = express();
 app.use(express.json());
-app.use(bodyParser.json()) // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/hello', (_req, res) => {
   res.send('Hello FullStack!');
@@ -17,13 +17,13 @@ app.get('/bmi', (req, res) => {
     if(isNotNumber(height) || isNotNumber(height))
     res.json({
         error: 'malformatted text'
-    })
+    });
     else
     res.json({
         height,
         weight,
         bmi: calculateBmi(Number(height), Number(weight))
-    })
+    });
   });
 
 const PORT = 3003;
