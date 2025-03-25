@@ -8,4 +8,7 @@ march 24, 2025
 03 slept
 04 struggled to set up typescript plug-in in sublime
 05 slept, been through part 9B fragment
-06 
+06 did exercise 9.1
+
+march 25, 2025
+01 slept, did exercise 9.2
