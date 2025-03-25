@@ -1,4 +1,5 @@
 // import { isNotNumber } from "./utils";
+console.log('hey! require.main === module is ', require.main === module);
 
 interface ExerciseCalcInputs {
     firstValue: number;
@@ -26,7 +27,7 @@ const parseExArguments = (args: string[]): ExerciseCalcInputs => {
     } else throw new Error('inappropriate inputs');
   };
 
-const calculateExercises = (dailyExerciseHours: number[], targetAmount: number): Result => {
+export const calculateExercises = (dailyExerciseHours: number[], targetAmount: number): Result => {
     const sampleSize = dailyExerciseHours.length;
     const trainingDays = dailyExerciseHours.filter(exh=>exh!==0).length;
     const totalExHours = dailyExerciseHours.reduce((a,b)=>a+b);
