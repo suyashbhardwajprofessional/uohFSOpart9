@@ -1,3 +1,10 @@
+// import { isNotNumber } from "./utils";
+
+interface ExerciseCalcInputs {
+    firstValue: number;
+    restArray: number[];
+  }
+
 interface Result {
     periodLength: number;
     trainingDays: number;
@@ -7,6 +14,17 @@ interface Result {
     target: number;
     average: number;
 }
+
+const parseExArguments = (args: string[]): ExerciseCalcInputs => {
+    const receivedListOfValues = args.splice(2)
+    if (receivedListOfValues.length < 2) throw new Error('Not enough arguments');
+    if(!receivedListOfValues.some(element => isNaN(Number(element)))) {
+        return {
+            firstValue: Number(receivedListOfValues[0]),
+            restArray: receivedListOfValues.slice(1).map(x=>Number(x))
+        }
+    } else throw new Error('inappropriate inputs');
+  }
 
 const calculateExercises = (dailyExerciseHours: number[], targetAmount: number): Result => {
     const sampleSize = dailyExerciseHours.length
@@ -26,4 +44,15 @@ const calculateExercises = (dailyExerciseHours: number[], targetAmount: number):
     }
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+// console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+
+try {
+    const { firstValue, restArray } = parseExArguments(process.argv);
+    console.log(calculateExercises(restArray, firstValue))
+  } catch (error: unknown) {
+    let errorMessage = 'Something bad happened.'
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
+  }
