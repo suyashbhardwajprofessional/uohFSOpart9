@@ -1,5 +1,7 @@
 import { isNotNumber } from "./utils";
 
+require.main === module
+
 interface BmiInputs {
     value1: number;
     value2: number;
@@ -19,7 +21,7 @@ const parseArguments = (args: string[]): BmiInputs => {
     }
   }
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): String => {
     const bmi = weight/((height*0.01)*(height*0.01))
     if(bmi<18.5) return 'underweight';
     else if(bmi<25.0) return 'normal weight';
