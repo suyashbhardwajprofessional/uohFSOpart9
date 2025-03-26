@@ -17,3 +17,11 @@ march 25, 2025
 04 did exercise 9.5
 05 did exercise 9.6, 9.7
 06 did exercise 9.8, 9.9
+
+march 26, 2025
+01 gdgsm reference explored
+02 been through a fragment of part 9C
+03 slept
+04 manifested the read fragment of part 9C
+05 slept
+06 did exercises 9.10, 9.11
