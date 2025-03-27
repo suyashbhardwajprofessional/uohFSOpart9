@@ -25,3 +25,10 @@ march 26, 2025
 04 manifested the read fragment of part 9C
 05 slept
 06 did exercises 9.10, 9.11
+07 tried groundworks on fgagment after
+
+march 27, 2025
+01 slept
+02 slept, got the groundwork functional
+03 did exercises 9.12, 9.13
+04 slept, did exercise 9.14
