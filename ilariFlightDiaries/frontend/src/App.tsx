@@ -8,6 +8,7 @@ function App() {
   const [visibility, setVisibility] = useState<string>('')
   const [weather, setWeather] = useState<string>('')
   const [comment, setComment] = useState<string>('')
+  const [notification, setNotification] = useState<string>('')
 
   const handleFormSubmission = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
@@ -23,6 +24,13 @@ function App() {
       setWeather('');
       setComment('');
     } )
+    .catch(error=>{
+      console.log(error.response.data)
+      setNotification(error.response.data);
+      setTimeout(()=> {
+        setNotification('');
+      }, 3000);
+    })
   }
 
   useEffect(()=>{
@@ -33,6 +41,7 @@ function App() {
   },[])
 
   return (<>
+    <p style={{color:"red"}}>{notification}</p>
     <div>
       <h2>Add new entry</h2>
       <form onSubmit={handleFormSubmission}>
@@ -72,8 +81,8 @@ function App() {
         </tr>
       </thead>
       <tbody>
-      {diaries.map(diary => 
-        <tr>
+      {diaries.map((diary, index) => 
+        <tr key={index}>
           <td>{diary.id}</td>
           <td>{diary.date}</td>
           <td>{diary.weather}</td>
