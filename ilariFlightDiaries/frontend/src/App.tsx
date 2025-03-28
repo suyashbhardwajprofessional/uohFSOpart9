@@ -50,15 +50,39 @@ function App() {
           <tbody>
             <tr>
               <td>date</td>
-              <td><input name='date' type="text" value={date} onChange={(evt)=> setDate(evt.target.value)} /></td>
+              <td><input name='date' type="date" value={date} onChange={(evt)=> setDate(evt.target.value)} /></td>
             </tr>
             <tr>
               <td>visibility</td>
-              <td><input name='visibility' type="text" value={visibility} onChange={(evt)=> setVisibility(evt.target.value)} /></td>
+              <td>
+                <div style={{display:'flex'}}>
+                {['great', 'good', 'ok', 'poor'].map((selectionitem, index) => 
+                  <div key={index}>
+                    <input 
+                      type="radio" name="visibility"
+                      onChange={() => setVisibility(selectionitem)}
+                    />
+                    <i>{selectionitem}</i>
+                  </div>
+                )}
+                </div>
+              </td>
             </tr>
             <tr>
               <td>weather</td>
-              <td><input name='weather' type="text" value={weather} onChange={(evt)=> setWeather(evt.target.value)} /></td>
+              <td>
+                <div style={{display:'flex'}}>
+                  {['sunny', 'rainy', 'cloudy', 'stormy', 'windy'].map((selectionitem, index) => 
+                    <div key={index}>
+                      <input 
+                        type="radio" name="weather"
+                        onChange={() => setWeather(selectionitem)}
+                      />
+                      <i>{selectionitem}</i>
+                    </div>
+                  )}
+                </div>
+              </td>
             </tr>
             <tr>
               <td>comment</td>
