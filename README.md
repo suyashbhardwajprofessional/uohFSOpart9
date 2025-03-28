@@ -37,3 +37,5 @@ march 27, 2025
 
 march 28, 2025
 01 did exercise 9.16
+02 been through the fragment 9D post exercise 9.16
+03 did exercises 9.17, 9.18
