@@ -32,3 +32,8 @@ march 27, 2025
 02 slept, got the groundwork functional
 03 did exercises 9.12, 9.13
 04 slept, did exercise 9.14
+05 did exercise 9.15
+06 been through a fragment of part 9D, tried exercise 9.16 - failed
+
+march 28, 2025
+01 did exercise 9.16
