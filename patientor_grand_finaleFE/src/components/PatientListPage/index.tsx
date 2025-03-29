@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
+import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody, IconButton } from '@mui/material';
 import axios from 'axios';
 
 import { PatientFormValues, Patient } from "../../types";
 import AddPatientModal from "../AddPatientModal";
-
 import HealthRatingBar from "../HealthRatingBar";
-
+import { useNavigate } from "react-router-dom";
 import patientService from "../../services/patients";
+import LaunchIcon from "@mui/icons-material/Launch"
 
 interface Props {
   patients : Patient[]
@@ -47,6 +47,8 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="App">
       <Box>
@@ -61,6 +63,7 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
             <TableCell>Gender</TableCell>
             <TableCell>Occupation</TableCell>
             <TableCell>Health Rating</TableCell>
+            <TableCell>More Details</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -71,6 +74,11 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
               <TableCell>{patient.occupation}</TableCell>
               <TableCell>
                 <HealthRatingBar showText={false} rating={1} />
+              </TableCell>
+              <TableCell>
+              <IconButton onClick={()=>navigate(`/patients/${patient.id}`)}>
+                <LaunchIcon />
+              </IconButton>
               </TableCell>
             </TableRow>
           ))}
