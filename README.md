@@ -160,3 +160,8 @@ march 28, 2025
 03 did exercises 9.17, 9.18
 04 did exercise 9.19, 9.20
 05 slept
+
+march 29, 2025
+01 slept
+02 slept
+03 slept, did exercise 9.21
