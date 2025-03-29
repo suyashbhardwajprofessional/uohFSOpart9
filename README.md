@@ -168,3 +168,4 @@ march 29, 2025
 04 been through the entire part9E section
 05 did exercise 9.22
 06 did exercise 9.23
+07 did exercise 9.24
