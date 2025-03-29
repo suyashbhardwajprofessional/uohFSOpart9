@@ -167,3 +167,4 @@ march 29, 2025
 03 slept, did exercise 9.21
 04 been through the entire part9E section
 05 did exercise 9.22
+06 did exercise 9.23

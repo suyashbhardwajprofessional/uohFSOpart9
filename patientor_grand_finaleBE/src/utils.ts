@@ -1,4 +1,4 @@
-import { NewPatientEntry, Sex } from "./types";
+import { NewPatientEntry, Sex, Entry } from "./types";
 import { z } from 'zod';
 
 const isString = (text: unknown): text is string => {
@@ -48,6 +48,13 @@ const isString = (text: unknown): text is string => {
     return gender;
   };
 
+  const parseEntries = (entries: unknown): Entry[] => {
+    if (!Array.isArray(entries)) {
+      throw new Error('Incorrect or missing entries: ' + entries);
+    }
+    return entries;
+  }
+
 export const toNewPatientEntry = (object:unknown) => {
     if ( !object || typeof object !== 'object' ) {
         throw new Error('Incorrect or missing data');
@@ -60,7 +67,7 @@ export const toNewPatientEntry = (object:unknown) => {
           ssn: parseSSN(object.ssn),
           gender: parseGender(object.gender),
           occupation: parseOccupation(object.occupation),
-          entries: []
+          entries: parseEntries(object.entries)
         };
         return newEntry;
     }
