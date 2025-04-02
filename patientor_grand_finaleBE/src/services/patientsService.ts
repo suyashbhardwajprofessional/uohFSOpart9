@@ -3,10 +3,11 @@ import { NewPatientEntry, NonSensitivePatientEntry, Patient } from '../types';
 import { v1 as uuid } from 'uuid'
 
 const getPatientsEntries = (): NonSensitivePatientEntry[] => {
-  return patients.map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
+  return patients.map(({ id, name, dateOfBirth, ssn, gender, occupation, entries }) => ({
     id, 
     name, 
-    dateOfBirth, 
+    dateOfBirth,
+    ssn,
     gender, 
     occupation,
     entries

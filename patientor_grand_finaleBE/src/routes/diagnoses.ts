@@ -9,6 +9,11 @@ router.get('/', (_req, res) => {
     res.send(diagnosesService.getDiagnosesEntries())
 });
 
+router.get('/:code', (req, res) => {
+    const codeKey = req.params.code;
+    res.send(diagnosesService.getDiagnoseEntry(codeKey));
+});
+
 // router.get('/', (_req, res:Response<NonSensitiveDiaryEntry[]>) => {
 //     res.send(diaryService.getNonSensitiveEntries());
 // });

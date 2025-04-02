@@ -4,6 +4,20 @@ import { useParams } from 'react-router-dom'
 import FemaleIcon from "@mui/icons-material/Female"
 import MaleIcon from "@mui/icons-material/Male"
 import patientService from "../../services/patients";
+import diagnoseService from "../../services/diagnosis";
+
+const DescriptiveCode = ({code}) => {
+	const [descDiagnose, setDescDiagnose] = useState('')
+	useEffect(()=>{
+		const fetchDiagnose = async () => {
+	      const diagnose = await diagnoseService.getDiagnoseByCode(code)
+	      if(diagnose) setDescDiagnose(`${diagnose.code}: ${diagnose.name}`)
+	    };
+		void fetchDiagnose();
+	},[])
+
+	return (<li>{descDiagnose}</li>)
+}
 
 const index = ({ patients }) => {
 	const [thePatient, setThePatient] = useState<Patient>({});
@@ -30,10 +44,10 @@ const index = ({ patients }) => {
 			<p>occupation: {thePatient.occupation}</p>
 
 			<h3>entries</h3>
-			{Array.isArray(thePatient.entries) &&  thePatient.entries.map(entry => 
+			{Array.isArray(thePatient.entries) && thePatient.entries.map(entry => 
 				<div>
 					<p>{entry.date} <i>{entry.description}</i></p>
-					<ul>{Array.isArray(entry.diagnosisCodes) && entry.diagnosisCodes.map(onecode=><li>{onecode}</li>)}</ul>
+					<ul>{Array.isArray(entry.diagnosisCodes) && entry.diagnosisCodes.map(onecode=><DescriptiveCode code={onecode}/>)} </ul>
 				</div>
 				)}
 		</div>

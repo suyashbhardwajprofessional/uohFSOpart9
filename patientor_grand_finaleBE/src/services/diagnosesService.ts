@@ -6,6 +6,11 @@ const getDiagnosesEntries = (): Diagnosis[] => {
   return diagnoses;
 };
 
+const getDiagnoseEntry = (codeKey: string): Diagnosis | undefined => {
+  return diagnoses.find((diagnose) => diagnose.code===codeKey)
+};
+
+
 // const getNonSensitiveEntries = (): Pick<DiaryEntry, 'id' | 'date' | 'weather' | 'visibility'>[] => {
 //     return diaries;
 //   }
@@ -31,6 +36,7 @@ const getDiagnosesEntries = (): Diagnosis[] => {
 
 export default {
   getDiagnosesEntries,
+  getDiagnoseEntry
 //   addDiary,
 //   getNonSensitiveEntries
 };
