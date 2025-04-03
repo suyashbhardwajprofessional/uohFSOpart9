@@ -1,4 +1,4 @@
-import { NewPatientEntry, Sex, Entry } from "./types";
+import { NewPatientEntry, Sex, Entry, HealthCheckRating } from "./types";
 import { z } from 'zod';
 
 const isString = (text: unknown): text is string => {
@@ -81,4 +81,33 @@ export const newPatientEntrySchema = z.object({
   gender: z.nativeEnum(Sex),
   occupation: z.string(),
   ssn: z.string()
+});
+
+const DischargeObj = z.object({
+  date: z.string().date(),
+  criteria: z.string()
+})
+
+const SickLeaveObj = z.object({
+  startDate: z.string().date(),
+  endDate: z.string().date()
+})
+
+const theEntry = z.object({
+  description: z.string(),
+  date: z.string().date(),
+  specialist: z.string(),
+  diagnosisCodes: z.array(z.string()),
+  type: z.string(),
+  healthCheckRating: z.nativeEnum(HealthCheckRating),
+  employerName: z.string(),
+  sickLeave: SickLeaveObj,
+  discharge: DischargeObj
+});
+
+export const newEntrySchema = theEntry.partial({
+  healthCheckRating: true,
+  employerName: true,
+  sickLeave: true,
+  discharge: true
 });
