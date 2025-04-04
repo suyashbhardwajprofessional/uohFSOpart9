@@ -11,6 +11,13 @@ import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { DialogContent, Divider, Alert } from '@mui/material';
+import axios from 'axios';
+
+interface Props {
+  patients : Patient[]
+  setPatients: React.Dispatch<React.SetStateAction<Patient[]>>
+}
 
 const DescriptiveCode = ({ code }) => {
 	const [descDiagnose, setDescDiagnose] = useState('');
@@ -26,28 +33,15 @@ const DescriptiveCode = ({ code }) => {
 };
 
 const HospitalEntry = ({ entry }) => {
-	return (
-		<div>
-			<LocalHospitalIcon />
-		</div>
-	);
+	return ( <LocalHospitalIcon /> );
 };
 
 const OccupationalHealthcareEntry = ({ entry }) => {
-	return (
-		<div>
-			<WorkIcon />
-			<i>{entry.employerName}</i>
-		</div>
-	);
+	return ( <WorkIcon /> );
 };
 
 const HealthCheckEntry = ({ entry }) => {
-	return (
-		<div>
-			<HealthAndSafetyIcon />
-		</div>
-	);
+	return ( <HealthAndSafetyIcon /> );
 };
 
 const EntryDetails = ({ entry }) => {
@@ -68,9 +62,11 @@ const EntryDetails = ({ entry }) => {
 
 	return (
 		<div style={{ border: '1px solid grey', borderRadius: '20px', paddingInline: '1em', marginBlock: '1em', paddingBlock: '0.5em' }}>
-			<p style={{ display: 'flex', alignItems: 'center' }}>
-				{entry.date} {specificComponentToLoad}
-			</p>
+			<div style={{display:'flex', alignItems: 'center'}}>
+				<p> {entry.date} </p>
+				<span>{specificComponentToLoad}</span>
+			</div>
+
 			<i>{entry.description}</i>
 			<p>
 				{entry.type === 'HealthCheck' ? (
@@ -91,7 +87,7 @@ const EntryDetails = ({ entry }) => {
 	);
 };
 
-const index = ({ patients }) => {
+const index = ({ patients, setPatients } : Props ) => {
 	const [thePatient, setThePatient] = useState<Patient>({});
 	const [showForm, setShowForm] = useState(false);
 	const [formData, setFormData] = useState({
@@ -99,15 +95,44 @@ const index = ({ patients }) => {
 		date: '',
 		specialist: '',
 		healthCheckRating: 0,
-		diagnosiscodes: '',
+		diagnosisCodes: '',
 	});
+	const [error, setError] = useState<string>();
 
 	const patientId = useParams().id;
 
-	const handleSubmit = e => {
-		e.preventDefault(); // Prevents the default form submission behaviour
-		// Process and send formData to the server or perform other actions
-		console.log('Form data submitted:', formData);
+	const handleSubmit = async e => {
+		e.preventDefault();
+		const postObj = {
+			...formData, 
+			healthCheckRating: Number(formData.healthCheckRating), 
+			diagnosisCodes: formData.diagnosisCodes.split(','),
+			type: 'HealthCheck'
+		}
+		try {
+			const newMadeEntry = await patientService.createEntry(patientId, postObj);
+			setShowForm(false);
+			setFormData({description: '',
+				date: '',
+				specialist: '',
+				healthCheckRating: 0,
+				diagnosisCodes: ''}
+			);
+		} catch (e: unknown) {
+	      if (axios.isAxiosError(e)) {
+	        if (e?.response?.data && typeof e?.response?.data === "string") {
+	          const message = e.response.data.replace('Something went wrong. Error: ', '');
+	          console.error(message);
+	          setTimeout(()=>setError(''),5000); setError(message);
+	        } else if(e?.response?.data?.error && typeof e?.response?.data?.error === "object" && e?.response?.data?.error.length) {
+	          setTimeout(()=>setError(''),5000); setError(e.response.data.error[0].message);
+	        } else {
+	        	setTimeout(()=>setError(''),5000); setError("Unrecognized axios error");
+	        }
+	      } else {
+	      	setTimeout(()=>setError(''),5000); setError("Unknown error");
+	      }
+	    }
 	};
 
 	const handleChange = e => {
@@ -121,7 +146,7 @@ const index = ({ patients }) => {
 			setThePatient(patient);
 		};
 		void fetchPatient();
-	}, []);
+	}, [showForm]);
 
 	return (
 		<div>
@@ -131,6 +156,11 @@ const index = ({ patients }) => {
 			</div>
 			<p>ssn: {thePatient.ssn}</p>
 			<p>occupation: {thePatient.occupation}</p>
+
+			<Divider />
+		    <DialogContent>
+		      {error && <Alert severity="error">{error}</Alert>}
+		    </DialogContent>
 
 			<h3>entries</h3>
 			<div style={{ border: '2px dotted black', padding: '1em' }}>
@@ -151,10 +181,10 @@ const index = ({ patients }) => {
 						id="date"
 						label="Date"
 						type="date"
+						name="date"
 						fullWidth
 						variant="standard"
 						sx={{ display: showForm ? '' : 'none' }}
-						defaultValue="2017-05-24"
 						InputLabelProps={{
 							shrink: true,
 						}}
@@ -189,9 +219,9 @@ const index = ({ patients }) => {
 						variant="standard"
 						fullWidth
 						margin="dense"
-						name="diagnosiscodes"
+						name="diagnosisCodes"
 						sx={{ display: showForm ? '' : 'none' }}
-						value={formData.diagnosiscodes}
+						value={formData.diagnosisCodes}
 						onChange={handleChange}
 						required
 					/>
